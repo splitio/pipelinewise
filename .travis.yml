@@ -16,11 +16,10 @@ after_script:
 
 before_deploy:
   - echo "${ARTIFACTORY_PASSWORD}" | docker login -u "${ARTIFACTORY_USER}" --password-stdin "${ARTIFACTORY_REGISTRY}"
-  - docker tag "$IMAGE_NAME" "${IMAGE_NAME}:${TRAVIS_BRANCH}"
-  - docker tag "$IMAGE_NAME" "${IMAGE_NAME}:${TRAVIS_COMMIT}"
-  - docker tag "$IMAGE_NAME" "${IMAGE_NAME}:${TRAVIS_PULL_REQUEST}"
+  - docker tag "$IMAGE_NAME" "${ARTIFACTORY_REGISTRY}/${IMAGE_NAME}:${TRAVIS_BRANCH}"
+  - docker tag "$IMAGE_NAME" "${ARTIFACTORY_REGISTRY}/${IMAGE_NAME}:${TRAVIS_COMMIT}"
 deploy:
   provider: script
-  script: docker push "${ARTIFACTORY_REGISTRY}/${IMAGE_NAME}:latest" && docker push "${ARTIFACTORY_REGISTRY}/${IMAGE_NAME}:master" && docker push "${ARTIFACTORY_REGISTRY}/${IMAGE_NAME}:${TRAVIS_COMMIT}"
+  script: docker push "${ARTIFACTORY_REGISTRY}/${IMAGE_NAME}:latest" && docker push "${ARTIFACTORY_REGISTRY}/${IMAGE_NAME}:${TRAVIS_BRANCH}" && docker push "${ARTIFACTORY_REGISTRY}/${IMAGE_NAME}:${TRAVIS_COMMIT}"
   on:
     branch: master
