@@ -9,7 +9,7 @@ env:
 before_script:
   - version=0.10.4
 script:
-  - docker build -t "$IMAGE_NAME:latest" .
+  - docker build -t "${ARTIFACTORY_REGISTRY}/${IMAGE_NAME}:latest" .
 
 after_script:
   - docker images
