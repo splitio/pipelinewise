@@ -157,7 +157,8 @@
         "tap-snowflake",
         "tap-salesforce",
         "tap-jira",
-        "tap-fastly"
+        "tap-fastly",
+        "tap-pagerduty"
       ]
     },
     "db_conn": {

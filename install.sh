@@ -166,6 +166,7 @@ DEFAULT_CONNECTORS=(
     tap-jira
     tap-kafka
     tap-mysql
+    tap-pagerduty
     tap-postgres
     tap-s3-csv
     tap-salesforce
