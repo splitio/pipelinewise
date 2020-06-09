@@ -1,0 +1,3 @@
+-e git://github.com/splitio/tap-pagerduty.git@master#egg=tap-pagerduty
+#for debugging
+#-e /Users/pierre-alexandremasse/projects/analytics-pipeline/tap-pagerduty

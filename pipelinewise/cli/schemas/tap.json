@@ -156,6 +156,7 @@
         "tap-s3-csv",
         "tap-snowflake",
         "tap-salesforce",
+        "tap-pagerduty",
         "tap-jira"
       ]
     },
