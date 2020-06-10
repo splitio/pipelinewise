@@ -526,7 +526,7 @@ class PipelineWise:
 
                 # Find table specific metadata entries in the old and new streams
                 try:
-                    stream_table_mdata_idx = [i for i, md in enumerate(stream['metadata']) if md['breadcrumb'] == []][0] #made a change to streams #probably cannot find breadcrumbs
+                    stream_table_mdata_idx = [i for i, md in enumerate(stream['metadata']) if md['breadcrumb'] == []][0] 
                 except Exception:
                     pass
 
@@ -646,7 +646,7 @@ class PipelineWise:
         # Merge the old and new schemas and diff changes
         old_schema = utils.load_json(tap_properties_file)
         if old_schema:
-            schema_with_diff = self.merge_schemas(old_schema, new_schema) #looks like its not going through
+            schema_with_diff = self.merge_schemas(old_schema, new_schema) 
         else:
             schema_with_diff = new_schema
 
