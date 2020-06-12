@@ -820,6 +820,7 @@ class PipelineWise:
             self.logger.info(line.rstrip('\n'))
             return update_state_file(line)
 
+        self.logger.info('Running command: %s', command)
         # Run command with update_state_file as a callback to call for every stdout line
         if self.extra_log:
             utils.run_command(command, self.tap_run_log_file, update_state_file_with_extra_log)
