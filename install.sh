@@ -163,6 +163,7 @@ make_virtualenv pipelinewise
 
 # Set default and extra singer connectors
 DEFAULT_CONNECTORS=(
+    tap-fastly
     tap-jira
     tap-kafka
     tap-mysql
