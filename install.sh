@@ -166,7 +166,7 @@ DEFAULT_CONNECTORS=(
     tap-fastly
     tap-jira
     tap-kafka
-    tap-mysql
+    #tap-mysql
     tap-pagerduty
     tap-postgres
     tap-s3-csv
