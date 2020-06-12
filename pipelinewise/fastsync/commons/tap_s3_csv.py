@@ -4,10 +4,12 @@ import logging
 import re
 import sys
 import boto3
+import io
+import zipfile
 
 from datetime import datetime
 from time import struct_time
-from typing import Callable, Dict, List, Optional, Set
+from typing import Callable, Dict, List, Optional, Set, Iterator
 from botocore.credentials import DeferredRefreshableCredentials
 from messytables import (CSVTableSet, headers_guess, headers_processor, jts, offset_processor, type_guess)
 from singer.utils import strptime_with_tz
@@ -116,7 +118,8 @@ class FastSyncTapS3Csv:
         """
         bucket = self.connection_config['bucket']
 
-        s3_file_handle = S3Helper.get_file_handle(self.connection_config, s3_path)
+        # s3_file_handle = S3Helper.get_file_handle(self.connection_config, s3_path)
+        s3_file_stream = S3Helper.get_file_stream(self.connection_config, s3_path)
 
         # We observed data whose field size exceeded the default maximum of
         # 131072. We believe the primary consequence of the following setting
@@ -128,7 +131,9 @@ class FastSyncTapS3Csv:
         csv.field_size_limit(sys.maxsize)
 
         # pylint:disable=protected-access
-        iterator = singer_encodings_csv.get_row_iterator(s3_file_handle._raw_stream, table_spec)
+        iterator = singer_encodings_csv.get_row_iterator(s3_file_stream, table_spec)
+
+        fields_to_exclude = table_spec.get('exclude_properties', [])
 
         records_copied = len(records)
 
@@ -148,7 +153,8 @@ class FastSyncTapS3Csv:
             # make all columns safe
             # pylint: disable=invalid-name
             for k, v in row.items():
-                new_row[safe_column_name(k)] = v
+                if k not in fields_to_exclude:
+                    new_row[safe_column_name(k)] = v
 
             record = {**new_row, **custom_columns}
 
@@ -369,3 +375,33 @@ class S3Helper:
         s3_bucket = s3_client.Bucket(bucket)
         s3_object = s3_bucket.Object(s3_path)
         return s3_object.get()['Body']
+    
+    @classmethod
+    def get_file_stream(cls, config: Dict, s3_path: str) -> Iterator:
+        """
+        Get file stream to the file located in the s3 path.
+        It automatically decompress the file if it is zipped.
+        :param config: tap config
+        :param s3_path: file path in S3
+        :return: file stream
+        """
+        file_handle = cls.get_file_handle(config, s3_path)
+        # if csv is zipped, unzip it
+        stream = None
+        if s3_path.endswith('zip'):
+            LOGGER.info('decompress stream')
+            stream = cls.stream_zip_decompress(file_handle._raw_stream)
+        else:
+            stream = file_handle._raw_stream
+        return stream
+
+    @classmethod
+    def stream_zip_decompress(cls, stream: Iterator) -> Iterator:
+        """
+        Decompress first file of a zipped file stream
+        :param stream: file stream
+        :return: uncompressed file stream
+        """
+        buffer = io.BytesIO(stream.read())
+        file = zipfile.ZipFile(buffer)
+        return file.open(file.infolist()[0])

@@ -954,20 +954,20 @@ class PipelineWise:
         try:
             with pidfile.PIDFile(self.tap['files']['pidfile']):
                 # Run fastsync for FULL_TABLE replication method
-                #if len(fastsync_stream_ids) > 0:
-                #    self.logger.info('Table(s) selected to sync by fastsync: %s', fastsync_stream_ids)
-                #    self.tap_run_log_file = os.path.join(log_dir, f'{target_id}-{tap_id}-{current_time}.fastsync.log')
-                #    self.run_tap_fastsync(
-                #        tap_type,
-                #        target_type,
-                #        tap_config,
-                #        tap_properties_fastsync,
-                #        tap_state,
-                #        tap_transformation,
-                #        cons_target_config
-                #    )
-                #else:
-                #    self.logger.info('No table available that needs to be sync by fastsync')
+                if len(fastsync_stream_ids) > 0:
+                    self.logger.info('Table(s) selected to sync by fastsync: %s', fastsync_stream_ids)
+                    self.tap_run_log_file = os.path.join(log_dir, f'{target_id}-{tap_id}-{current_time}.fastsync.log')
+                    self.run_tap_fastsync(
+                        tap_type,
+                        target_type,
+                        tap_config,
+                        tap_properties_fastsync,
+                        tap_state,
+                        tap_transformation,
+                        cons_target_config
+                    )
+                else:
+                    self.logger.info('No table available that needs to be sync by fastsync')
 
                 # Run singer tap for INCREMENTAL and LOG_BASED replication methods
                 if len(singer_stream_ids) > 0:
