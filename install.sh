@@ -166,14 +166,15 @@ DEFAULT_CONNECTORS=(
     tap-fastly
     tap-jira
     tap-kafka
-    #tap-mysql
+    tap-mysql
     tap-pagerduty
     tap-postgres
     tap-s3-csv
     tap-salesforce
     tap-snowflake
     tap-zendesk
-    #target-s3-csv
+    tap-sentry
+    target-s3-csv
     target-snowflake
     target-redshift
     transform-field

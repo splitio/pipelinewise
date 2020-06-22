@@ -153,11 +153,13 @@
         "tap-adwords",
         "tap-zendesk",
         "tap-kafka",
+        "tap-sentry",
         "tap-s3-csv",
         "tap-snowflake",
         "tap-salesforce",
         "tap-jira",
         "tap-fastly",
+        "tap-datadog",
         "tap-pagerduty"
       ]
     },

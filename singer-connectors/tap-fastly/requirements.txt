@@ -1,2 +1,1 @@
--e git://github.com/splitio/tap-fastly.git@master#egg=tap-fastly
-
+-e git://github.com/splitio/tap-fastly.git@awall-tap-fastly#egg=tap-fastly

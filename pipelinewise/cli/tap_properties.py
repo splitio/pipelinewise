@@ -155,6 +155,30 @@ def get_tap_properties(tap=None):
             'default_replication_method': 'INCREMENTAL',
             'default_data_flattening_max_level': 0
         },
+        'tap-sentry': {
+            'tap_config_extras': {
+                'user_agent': 'PipelineWise - Tap Sentry'
+            },
+            'tap_stream_id_pattern': '{{table_name}}',
+            'tap_stream_name_pattern': '{{table_name}}',
+            'tap_catalog_argument': '--properties',
+            'default_replication_method': 'INCREMENTAL',
+            'default_data_flattening_max_level': 0
+        },
+
+        'tap-datadog': {
+            'tap_config_extras': {
+                'user_agent': 'PipelineWise - Tap Datadog'
+            },
+            'tap_stream_id_pattern': '{{table_name}}',
+            'tap_stream_name_pattern': '{{table_name}}',
+            'tap_catalog_argument': '--properties',
+            'default_replication_method': 'INCREMENTAL',
+            'default_data_flattening_max_level': 0
+        },
+
+
+
         'tap-s3-csv': {
             'tap_config_extras': {
                 'tables': generate_tap_s3_csv_to_table_mappings(tap)
