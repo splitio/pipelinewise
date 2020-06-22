@@ -159,7 +159,6 @@
         "tap-salesforce",
         "tap-jira",
         "tap-fastly",
-        "tap-datadog",
         "tap-pagerduty"
       ]
     },
