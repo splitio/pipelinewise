@@ -173,7 +173,8 @@ DEFAULT_CONNECTORS=(
     tap-salesforce
     tap-snowflake
     tap-zendesk
-    #target-s3-csv
+    tap-sentry
+    # target-s3-csv
     target-snowflake
     target-redshift
     transform-field
