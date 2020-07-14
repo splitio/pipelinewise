@@ -137,7 +137,7 @@ class PipelineWise:
                     self.logger.error('Stream %s has no metadata with no breadcrumbs: %s.', tap_stream_id, metadata)
                     raise Exception(f'Missing metadata in stream {tap_stream_id}')
 
-                selected = table_meta.get('selected', False) #gets something from metadata to decide if sync or not 
+                selected = table_meta.get('selected', False)
                 replication_method = table_meta.get('replication-method', None)
 
                 # Detect if initial sync is required. Look into the state file, get the bookmark
@@ -937,7 +937,7 @@ class PipelineWise:
             tap_properties_fastsync,
             fastsync_stream_ids,
             tap_properties_singer,
-            singer_stream_ids 
+            singer_stream_ids
         ) = self.create_filtered_tap_properties(
             target_type,
             tap_type,
