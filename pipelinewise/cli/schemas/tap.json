@@ -158,7 +158,8 @@
         "tap-salesforce",
         "tap-jira",
         "tap-fastly",
-        "tap-pagerduty"
+        "tap-pagerduty",
+        "tap-datadog"
       ]
     },
     "db_conn": {
