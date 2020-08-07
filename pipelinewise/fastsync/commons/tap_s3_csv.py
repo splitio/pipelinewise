@@ -130,8 +130,19 @@ class FastSyncTapS3Csv:
         # memory consumption but that's acceptable as well.
         csv.field_size_limit(sys.maxsize)
 
+        # csv.get_row_iterator will check key-properties exist in the csv
+        # so we need to give them the list minus the meta field such as SDC_SOURCE_FILE_COLUMN or others
+        reduced_table_spec = {}
+        reduced_table_spec["key_properties"] = table_spec.get("key_properties", []).copy()
+        if S3Helper.SDC_SOURCE_BUCKET_COLUMN in reduced_table_spec["key_properties"]:
+            reduced_table_spec["key_properties"].remove(S3Helper.SDC_SOURCE_BUCKET_COLUMN)
+        if S3Helper.SDC_SOURCE_FILE_COLUMN in reduced_table_spec["key_properties"]: 
+            reduced_table_spec["key_properties"].remove(S3Helper.SDC_SOURCE_FILE_COLUMN)
+        if S3Helper.SDC_SOURCE_LINENO_COLUMN in reduced_table_spec["key_properties"]: 
+            reduced_table_spec["key_properties"].remove(S3Helper.SDC_SOURCE_LINENO_COLUMN)
+
         # pylint:disable=protected-access
-        iterator = singer_encodings_csv.get_row_iterator(s3_file_stream, table_spec)
+        iterator = singer_encodings_csv.get_row_iterator(s3_file_stream, reduced_table_spec)
 
         fields_to_exclude = table_spec.get('exclude_properties', [])
 

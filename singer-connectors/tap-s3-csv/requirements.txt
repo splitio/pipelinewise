@@ -1,2 +1,2 @@
 #pipelinewise-tap-s3-csv==1.1.0
--e git://github.com/splitio/pipelinewise-tap-s3-csv.git@aws-billing-support#egg=pipelinewise-tap-s3-csv
+-e git://github.com/splitio/pipelinewise-tap-s3-csv.git@mastert#egg=pipelinewise-tap-s3-csv
