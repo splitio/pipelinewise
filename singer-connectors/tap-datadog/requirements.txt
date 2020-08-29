@@ -1,1 +1,2 @@
 -e git://github.com/splitio/tap-datadog@master#egg=tap-datadog
+#-e ~/projects/analytics-pipeline/tap-datadog
