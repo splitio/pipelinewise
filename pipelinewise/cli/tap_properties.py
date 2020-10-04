@@ -45,6 +45,34 @@ def generate_tap_s3_csv_to_table_mappings(tap):
 
     return s3_csv_tables
 
+def generate_tap_sumologic_to_table_mappings(tap):
+    """
+    Generating a sumologic query to table mapping for a sumologic
+    tap. The mapping defines which files needs to be loaded into
+    which table and what are the query characteristics
+
+    Example output that compatible with tap-sumologic tap:
+        "tables": [{
+            "table_name": "my_table",
+            "query": "_sourceCategory=xxxx | timeslice 1d | count by _timeslice, user_id",
+            "bookmark_properties": ["_timeslice"]
+        }]
+    """
+    query_tables = []
+
+    # Using the input tap YAML we can generate the
+    # required config.json for the tap-s3-csv
+    schemas = tap.get('schemas', []) if tap else None
+    if schemas:
+        # We take the first schema
+        tables = schemas[0].get('tables', [])
+        for table in tables:
+            query_to_table_mapping = table.get('query_mapping', {})
+            if query_to_table_mapping:
+                query_to_table_mapping['table_name'] = table['table_name']
+                query_tables.append(query_to_table_mapping)
+
+    return query_tables
 
 # Taps are implemented by different persons and teams without
 # common naming convention and structures in the tap specific
@@ -175,10 +203,16 @@ def get_tap_properties(tap=None):
             'default_replication_method': 'INCREMENTAL',
             'default_data_flattening_max_level': 0
         },
-
-
-
-
+        'tap-sumologic': {
+            'tap_config_extras': {
+                'tables': generate_tap_sumologic_to_table_mappings(tap)
+            },
+            'tap_stream_id_pattern': '{{table_name}}',
+            'tap_stream_name_pattern': '{{table_name}}',
+            'tap_catalog_argument': '--properties',
+            'default_replication_method': 'INCREMENTAL',
+            'default_data_flattening_max_level': 0
+        },
         'tap-s3-csv': {
             'tap_config_extras': {
                 'tables': generate_tap_s3_csv_to_table_mappings(tap)

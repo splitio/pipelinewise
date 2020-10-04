@@ -1,0 +1,3 @@
+-e git://github.com/splitio/tap-sumologic.git@main#egg=tap-sumologic
+#for debugging
+#-e /Users/pierre-alexandremasse/projects/analytics-pipeline/tap-sumologic

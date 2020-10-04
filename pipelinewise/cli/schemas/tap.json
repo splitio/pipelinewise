@@ -160,6 +160,7 @@
         "tap-jira",
         "tap-fastly",
         "tap-pagerduty",
+        "tap-sumologic",
         "tap-datadog"
       ]
     },
