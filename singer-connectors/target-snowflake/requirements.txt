@@ -1,1 +1,2 @@
-pipelinewise-target-snowflake==1.6.2
+#pipelinewise-target-snowflake==1.8.0
+-e git://github.com/splitio/pipelinewise-target-snowflake@splitio-1.8.0#egg=pipelinewise-target-snowflake
