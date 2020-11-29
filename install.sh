@@ -173,7 +173,7 @@ DEFAULT_CONNECTORS=(
     tap-postgres
     tap-s3-csv
     tap-salesforce
-    tap-snowflake
+    #tap-snowflake
     tap-zendesk
     tap-sentry
     # target-s3-csv
